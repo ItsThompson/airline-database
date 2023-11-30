@@ -79,11 +79,10 @@ def add_new_flight():
                                           (len(aircraft_type_records) - 1), [],
                                           first_time)
 
-        # Check if any planes are available
         manufacturer = aircraft_type_records[user_input][0]
         model = aircraft_type_records[user_input][1]
 
-        # Loads flights for aircraft with selected type
+        # INFO: Loads flights for aircraft with selected type
         cmd = "SELECT flight.aircraft_id, flight.departure, flight.arrival \
 FROM flight INNER JOIN aircraft ON flight.aircraft_id = aircraft.aircraft_id \
 WHERE aircraft.manufacturer = ? AND aircraft.aircraft_model = ?"
@@ -127,7 +126,6 @@ WHERE aircraft.manufacturer = ? AND aircraft.aircraft_model = ?"
             print("🛫 No available aircraft of desired type.")
             first_time = False
 
-            # Select different aircraft or return to main
             if yes_no_prompt(
                     "Select a new plane or return to main menu (y/n):"):
                 continue
@@ -139,7 +137,7 @@ WHERE aircraft.manufacturer = ? AND aircraft.aircraft_model = ?"
         " with aircraft_id of " + str(aircraft_id) + " is available.",
         Color.CYAN)
 
-    # Insert to Database
+    # INFO: Insert to Database
     insert_statement = "INSERT INTO flight \
 (flight_designator, aircraft_id, departure, arrival, \
 departure_airport_code, arrival_airport_code, passengers) \
@@ -191,7 +189,7 @@ def add_new_pilot():
     license_expiry_date = string_input_validation(license_expiry_date_prompt,
                                                   10, 10)
 
-    # Insert to Database
+    # INFO: Insert to Database
     insert_statement = "INSERT INTO pilot (first_name, last_name, \
 nationality, license_number, license_expirydate, flight_hours) VALUES\
 (?, ?, ?, ?, ?, ?)"
@@ -245,7 +243,7 @@ Singapore: 9V-AAA to 9V-ZZZ"""
     aircraft_registration = string_input_validation(
         aircraft_registration_prompt, 0, 10)
 
-    # Insert to Database
+    # INFO: Insert to Database
     insert_statement = "INSERT INTO aircraft (manufacturer, aircraft_model, \
 aircraft_registration) VALUES (?,?,?)"
 
@@ -269,6 +267,7 @@ aircraft_registration) VALUES (?,?,?)"
 
 
 def remove_flight():
+    # INFO: print_table: Prints and returns the list of possible flight_ids
     def print_table():
         select_statement = "SELECT * FROM flight"
         new_flight_row = select_query(select_statement)
@@ -305,6 +304,7 @@ def remove_flight():
 
     delete_statement = "DELETE FROM flight WHERE flight_id = ?"
     commit_query(delete_statement, (user_input, ))
+
     print_table()
     return_to_main()
 
@@ -376,23 +376,23 @@ WHERE flight_pilot_link_table.pilot_id = ?"
 
 
 def generate_stats(date):
-    # Number of flights (All Time):
+    # INFO: Number of flights (All Time):
     all_time_statement = "SELECT COUNT(*) FROM flight"
     flights_all_time = select_query(all_time_statement)[0][0]
 
-    # Number of flights (Monthly):
+    # INFO: Number of flights (Monthly):
     monthly_statement = "SELECT COUNT(*) FROM flight \
 WHERE strftime('%m', flight.departure) = ?"
 
     month = get_month(date)
 
-    # Number of flights (Weekly):
+    # INFO: Number of flights (Weekly):
     weekly_statement = "SELECT COUNT(*) FROM flight \
 WHERE strftime('%W', flight.departure) = ?"
 
     week = get_week(date)
 
-    # Fleet Info
+    # INFO: Fleet Info
     fleet_statement = "SELECT manufacturer, aircraft_model, COUNT(*) \
 FROM aircraft GROUP BY manufacturer, aircraft_model"
 
@@ -406,7 +406,7 @@ FROM aircraft GROUP BY manufacturer, aircraft_model"
 
         fleet_table.add_row([aircraft_type, str(rows[2])])
 
-    # Pilot Info
+    # INFO: Pilot Info
     pilot_statement = "SELECT first_name, last_name, nationality, \
 license_number, license_expirydate, flight_hours FROM pilot"
 
@@ -426,6 +426,7 @@ license_number, license_expirydate, flight_hours FROM pilot"
             nationality = rows[2]
         pilot_table.add_row([rows[3], name, nationality, rows[4], rows[5]])
 
+    # INFO: Output Data
     print("\n\n")
 
     print("> All Time Total Flights: " + str(flights_all_time))

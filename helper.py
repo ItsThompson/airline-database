@@ -29,6 +29,7 @@ class User(Enum):
     PASSENGER = 0
     EMPLOYEE = 1
 
+
 # NOTE: SQL Handlers
 def execute_from_file(sql_file):
     conn = sqlite3.connect(database)
@@ -161,6 +162,23 @@ def string_to_iso8601_date(string):
     return (True, iso8601_format)
 
 
+# NOTE: ISO8601 Helper Functions
+def get_month(date_string):
+    try:
+        date_object = datetime.strptime(date_string, "%Y-%m-%d")
+        return date_object.month
+    except ValueError:
+        return None
+
+
+def get_week(date_string):
+    try:
+        date_object = datetime.strptime(date_string, "%Y-%m-%d")
+        return date_object.isocalendar()[1]
+    except ValueError:
+        return None
+
+
 # NOTE: Misc
 def is_between_iso8601(date_time, start_datetime, end_datetime):
     if start_datetime <= date_time <= end_datetime:
@@ -186,23 +204,6 @@ Return to Main Screen? (y/n):"""
         return
     else:
         quit_terminal()
-
-
-def get_month(date_string):
-    try:
-        date_object = datetime.strptime(date_string, "%Y-%m-%d")
-        return date_object.month
-    except ValueError:
-        return None
-
-
-def get_week(date_string):
-    try:
-        date_object = datetime.strptime(date_string, "%Y-%m-%d")
-        return date_object.isocalendar()[1]
-    except ValueError:
-        return None
-
 
 def quit_terminal():
     print_color("👋 Shutting Down, see you next time!", Color.CYAN)
