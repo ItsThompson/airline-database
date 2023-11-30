@@ -82,9 +82,7 @@ def commit_query(query, args=None):
 def int_input_validation(string, minimum, maximum, possible_choices=[], first_time=True):
     if first_time:
         print(string)
-        user_input = input_color()
-    else:
-        user_input = input_color()
+    user_input = input_color()
 
     try:
         user_int = int(user_input)
@@ -103,9 +101,7 @@ def int_input_validation(string, minimum, maximum, possible_choices=[], first_ti
 def string_input_validation(string, minimum, maximum, possible_choices=[], first_time=True):
     if first_time:
         print(string)
-        user_input = input_color()
-    else:
-        user_input = input_color()
+    user_input = input_color()
 
     if not user_input:
         return ''
@@ -120,6 +116,18 @@ def string_input_validation(string, minimum, maximum, possible_choices=[], first
             return user_str
 
     return string_input_validation(string, minimum, maximum, possible_choices, False)
+
+
+def date_input_validation(string, first_time=True):
+    if first_time:
+        print(string)
+    user_input = input_color()
+
+    try:
+        datetime.strptime(user_input, '%Y-%m-%d')
+        return user_input
+    except ValueError:
+        return date_input_validation(string, False)
 
 
 # NOTE: Formatting
@@ -204,6 +212,7 @@ Return to Main Screen? (y/n):"""
         return
     else:
         quit_terminal()
+
 
 def quit_terminal():
     print_color("👋 Shutting Down, see you next time!", Color.CYAN)

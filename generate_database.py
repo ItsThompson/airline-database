@@ -38,6 +38,5 @@ def create_database():
         except CustomException as exception:
             print(exception)
 
-
     conn.commit()
     conn.close()
