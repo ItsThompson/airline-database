@@ -1,6 +1,6 @@
 from enum import Enum
 
-
+# INFO: Defines possible colors for printing and inputs
 class Color(Enum):
     RED = 0
     GREEN = 1
