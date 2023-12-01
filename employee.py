@@ -308,7 +308,7 @@ def remove_flight():
 
 
 def pilots_on_flight():
-    flight_id_prompt = "Please enter a flight id (Ex. 34)"
+    flight_id_prompt = "Please enter a flight id (Ex. 34):"
     select_statement = "SELECT * FROM flight"
     flights = select_query(select_statement)
     possible_ids = []
