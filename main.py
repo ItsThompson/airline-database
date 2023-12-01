@@ -1,7 +1,7 @@
 from helper import CustomException, User, int_input_validation, string_input_validation, option_output, string_to_iso8601_date, quit_terminal
 from color_terminal import Color, print_color
 from passenger import flight_search, book_flight, list_of_destinations
-from employee import add_new_flight, add_new_pilot, add_new_aircraft, remove_flight, list_of_pilots, pilot_schedule, generate_stats
+from employee import add_new_flight, add_new_pilot, add_new_aircraft, remove_flight, list_of_pilots, pilots_on_flight, pilot_schedule, generate_stats
 from generate_database import create_database
 import os
 
@@ -97,10 +97,11 @@ def employee_home_page():
       4. New Aircraft
       5. Remove Flight
       6. List of Pilots
-      7. Pilot Schedule
-      8. Statistics Dashboard
+      7. Pilots on Flight
+      8. Pilot Schedule
+      9. Statistics Dashboard
       0. Change User\n"""
-    choice = int_input_validation(welcome, 0, 8)
+    choice = int_input_validation(welcome, 0, 9)
 
     match choice:
         case 0:
@@ -125,9 +126,12 @@ def employee_home_page():
             option_output("List of Pilots", User.EMPLOYEE)
             list_of_pilots()
         case 7:
+            option_output("Pilots on Flight", User.EMPLOYEE)
+            pilots_on_flight()
+        case 8:
             option_output("Pilot Schedule", User.EMPLOYEE)
             pilot_schedule()
-        case 8:
+        case 9:
             option_output("Statistics Dashboard", User.EMPLOYEE)
             generate_stats(date)
         case _:

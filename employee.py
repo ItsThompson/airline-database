@@ -307,6 +307,55 @@ def remove_flight():
     return_to_main()
 
 
+def pilots_on_flight():
+    flight_id_prompt = "Please enter a flight id (Ex. 34)"
+    select_statement = "SELECT * FROM flight"
+    flights = select_query(select_statement)
+    possible_ids = []
+    for rows in flights:
+        possible_ids.append(rows[0])
+
+    flight_id = int_input_validation(flight_id_prompt, 0,
+                                     len(possible_ids) - 1, possible_ids)
+
+    print_color("⚙️ Querying Data", Color.CYAN)
+    pilot_statement = "SELECT flight.flight_id, flight.flight_designator, \
+flight.departure, flight.arrival, flight.departure_airport_code, \
+flight.arrival_airport_code, pilot.first_name, pilot.last_name, \
+aircraft.manufacturer, aircraft.aircraft_model FROM flight \
+INNER JOIN flight_pilot_link_table ON flight.flight_id = \
+flight_pilot_link_table.flight_id \
+INNER JOIN pilot ON pilot.pilot_id = flight_pilot_link_table.pilot_id \
+INNER JOIN aircraft ON aircraft.aircraft_id = flight.aircraft_id \
+WHERE flight.flight_id = ?"
+
+    records = select_query(pilot_statement, (flight_id, ))
+
+    flight_table = PrettyTable()
+    flight_table.field_names = [
+        "ID", "Designator", "Departure", "Arrival", "Departure Airport",
+        "Arrival Airport", "Aircraft"
+    ]
+    flight = records[0]
+    aircraft = flight[8] + " " + flight[9]
+    print_color("⚙️ Formatting Flight Table", Color.CYAN)
+    flight_table.add_row([
+        flight[0], flight[1],
+        iso8601_to_datetime(flight[2]),
+        iso8601_to_datetime(flight[3]), flight[4], flight[5], aircraft
+    ])
+
+    print_color("⚙️ Formatting Pilot Table", Color.CYAN)
+    pilot_table = PrettyTable()
+    pilot_table.field_names = ["First Name", "Last Name"]
+    for rows in records:
+        pilot_table.add_row([rows[6], rows[7]])
+
+    print(flight_table)
+    print(pilot_table)
+    return_to_main()
+
+
 def list_of_pilots():
     select_statement = "SELECT * FROM pilot"
     records = select_query(select_statement)
