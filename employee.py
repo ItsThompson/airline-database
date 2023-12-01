@@ -1,6 +1,6 @@
 import random
 from prettytable import PrettyTable
-from helper import int_input_validation, string_input_validation, select_query, commit_query, string_to_iso8601_time, is_between_iso8601, iso8601_to_datetime, yes_no_prompt, return_to_main, get_month, get_week
+from helper import int_input_validation, string_input_validation, date_input_validation, select_query, commit_query, string_to_iso8601_time, is_between_iso8601, iso8601_to_datetime, yes_no_prompt, return_to_main, get_month, get_week
 from color_terminal import Color, print_color
 
 
@@ -133,9 +133,8 @@ WHERE aircraft.manufacturer = ? AND aircraft.aircraft_model = ?"
                 return
 
     print_color(
-        "✈️ The " + manufacturer + " " + model +
-        " with aircraft_id of " + str(aircraft_id) + " is available.",
-        Color.CYAN)
+        "✈️ The " + manufacturer + " " + model + " with aircraft_id of " +
+        str(aircraft_id) + " is available.", Color.CYAN)
 
     # INFO: Insert to Database
     insert_statement = "INSERT INTO flight \
@@ -186,8 +185,7 @@ def add_new_pilot():
     license_expiry_date_prompt = "Please enter when license expiry date \
 (YYYY-MM-DD): "
 
-    license_expiry_date = string_input_validation(license_expiry_date_prompt,
-                                                  10, 10)
+    license_expiry_date = date_input_validation(license_expiry_date_prompt)
 
     # INFO: Insert to Database
     insert_statement = "INSERT INTO pilot (first_name, last_name, \
@@ -233,8 +231,8 @@ def add_new_aircraft():
     index = int_input_validation(aircraft_type_prompt, 0,
                                  len(aircraft_type_records) - 1)
 
-    manufacturer = aircraft_type_records[index][1]
-    aircraft_model = aircraft_type_records[index][2]
+    manufacturer = aircraft_type_records[index][0]
+    aircraft_model = aircraft_type_records[index][1]
 
     aircraft_registration_prompt = """Please enter the aircraft registration:
 United Kingdom: G-AAAA to G-ZZZZ
