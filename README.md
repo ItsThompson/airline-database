@@ -27,7 +27,7 @@ Throughout this assignment, the goal is to be familiar with the E-R model and co
 
 ## Showcase
 
-https://github.com/ItsThompson/airline-database/assets/33135895/3bfc1563-5e01-42bd-b81c-923974645ba8
+https://github.com/ItsThompson/airline-database/assets/33135895/18cffedf-dcdc-4831-be13-6ae5fcfb12b2
 
 ## Dependencies
 - prettytable (pip install prettytable)
