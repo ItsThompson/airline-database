@@ -10,6 +10,7 @@
 --------------------------------------------------------------------------
 Designed a flight database for an airline, encompassing information on 
 various flights, pilots and aircrafts.
+
 </pre>
 
 ![GitHub top language](https://img.shields.io/github/languages/top/ItsThompson/airline-database)
