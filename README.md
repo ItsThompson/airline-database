@@ -13,9 +13,9 @@ various flights, pilots and aircrafts.
 
 </pre>
 
-![GitHub top language](https://img.shields.io/github/languages/top/ItsThompson/airline-database)
-![GitHub last commit (branch)](https://img.shields.io/github/last-commit/ItsThompson/airline-database/main)
-![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/ItsThompson/airline-database)
+![GitHub top language](https://img.shields.io/github/languages/top/ItsThompson/airline-database/)
+![GitHub last commit (branch)](https://img.shields.io/github/last-commit/ItsThompson/airline-database/main/)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/ItsThompson/airline-database/)
 
 </div>
 
